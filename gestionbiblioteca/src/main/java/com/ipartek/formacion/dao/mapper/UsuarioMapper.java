@@ -1,0 +1,28 @@
+package com.ipartek.formacion.dao.mapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+
+import org.springframework.jdbc.core.RowMapper;
+
+import com.ipartek.formacion.dao.persistencia.Usuario;
+
+public class UsuarioMapper implements RowMapper<Usuario>{
+
+	@Override
+	public Usuario mapRow(ResultSet rs, int arg1) throws SQLException {
+		
+		Usuario usuario = new Usuario();
+		usuario.setCodigo(rs.getInt("codUsuario"));
+		usuario.setNombre(rs.getString("nombre"));
+		usuario.setApellidos(rs.getString("apellidos"));		
+		usuario.setfNacimiento(rs.getDate("fNacimiento"));
+		usuario.setMail(rs.getString("mail"));
+		usuario.setUsername(rs.getString("username"));
+		usuario.setPassword(rs.getString("password"));
+		
+		return usuario;
+	}
+
+}

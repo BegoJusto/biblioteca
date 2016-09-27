@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="databaseProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:/database.properties"/>
+	</bean>
+		
+	<bean name="mysqlDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${mysql.driver}"/>
+		<property name="url" value="${mysql.url}"/>
+		<property name="username" value="${mysql.user}"/>
+		<property name="password" value="${mysql.password}"/>
+	</bean>
+	
+	<bean id="usuarioDAOImp" class="com.ipartek.formacion.dao.UsuarioDAOImp">
+		<property name="dataSource" ref="mysqlDataSource"/>
+	</bean>
+	
+	<!-- En ref, ponemos usuarioDAOImp, porque lo que estamos inyectando es el objeto usuarioDAOImp, no la clase -->
+	<bean id="usuarioServiceImp" class="com.ipartek.formacion.services.UsuarioServiceImp">
+		<property name="usuarioDAO" ref="usuarioDAOImp"/>
+	</bean>
+	
+	<bean id="ejemplarDAOImp" class="com.ipartek.formacion.dao.EjemplarDAOImp">
+		<property name="dataSource" ref="mysqlDataSource"/>
+	</bean>
+	
+	<bean id = "ejemplarServiceImp" class="com.ipartek.formacion.services.EjemplarServiceImp">
+		<property name="ejemplarDAO" ref="ejemplarDAOImp"/>
+	</bean>
+	
+	<bean id = "libroDAOImp" class="com.ipartek.formacion.dao.LibroDAOImp">
+		<property name="dataSource" ref="mysqlDataSource"/>
+	</bean>
+	
+	<bean id = "libroServiceImp" class="com.ipartek.formacion.services.LibroServiceImp">
+		<property name="libroDAO" ref="libroDAOImp"/>
+	</bean>
+	
+	<bean id = "prestamoDAOImp" class="com.ipartek.formacion.dao.PrestamoDAOImp">
+		<property name="dataSource" ref="mysqlDataSource"/>
+	</bean>
+	
+	<bean id = "PrestamoServiceImp" class="com.ipartek.formacion.services.PrestamoServiceImp">
+		<property name="prestamoDAO" ref="prestamoDAOImp"/>
+	</bean>
+	
+</beans>
