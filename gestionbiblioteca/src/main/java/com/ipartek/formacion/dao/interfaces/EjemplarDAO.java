@@ -6,14 +6,13 @@ import com.ipartek.formacion.dao.persistencia.Libro;
 
 public interface EjemplarDAO extends LibroDAO {
 
-	public List<Ejemplar> getAll(Libro libro);
+	public List<Ejemplar> getEjemplares(Libro libro);
 
-	public Ejemplar getById(int id);
+	public Ejemplar getEjemplar(int codEjemplar);
 
-	public void delete(int id);
+	public void delete(int codLibro);
 
 	public Ejemplar update(Ejemplar ejemplar);
-	
-	public Ejemplar create(Ejemplar ejemplar);
 
+	Ejemplar create(Ejemplar ejemplar);
 }

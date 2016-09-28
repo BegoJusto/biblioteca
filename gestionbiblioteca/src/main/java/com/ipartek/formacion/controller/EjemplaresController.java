@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.ipartek.formacion.dao.persistencia.Ejemplar;
+import com.ipartek.formacion.dao.persistencia.Libro;
 import com.ipartek.formacion.dao.persistencia.Usuario;
 import com.ipartek.formacion.services.EjemplarServiceImp;
 
@@ -83,7 +84,7 @@ public class EjemplaresController extends MultiActionController {
 	 public ModelAndView getById(@PathVariable("id") int id){
 		 
 		 mav = new ModelAndView("/ejemplares/ejemplar");
-		 Ejemplar ejemplar = es.getById(id);
+		 Ejemplar ejemplar = es.getEjemplar(id);
 		 mav.addObject("ejemplar",ejemplar);
 		
 		 return mav;	 
@@ -94,7 +95,7 @@ public class EjemplaresController extends MultiActionController {
 	 public ModelAndView getAll(){
 		 
 		 mav = new ModelAndView("/ejemplares/listado");
-		 List<Ejemplar> ejemplares = es.getAll();
+		 List<Libro> ejemplares = es.getAll();
 		 mav.addObject("listado-ejemplares", ejemplares);
 		 
 		 return mav;

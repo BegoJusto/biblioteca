@@ -3,8 +3,6 @@
  */
 package com.ipartek.formacion.dao.persistencia;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 

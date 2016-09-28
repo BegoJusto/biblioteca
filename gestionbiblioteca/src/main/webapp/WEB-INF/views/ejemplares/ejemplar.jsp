@@ -15,6 +15,27 @@
 				<form:input path="codigo" readonly="true" size="10" disabled="true" />
 				<form:hidden path="codigo" />
 			</c:if>
+			<div class="form-group col-md-8 column ui-sortable">
+					<form:label path="autor">
+						<spring:message text="Autor: " />
+					</form:label>
+					<form:input path="autor" cssClass="" cssErrorClass="" />
+					<form:errors cssClass="" path="autor" />
+				</div>
+				<div class="form-group col-md-8 column ui-sortable">
+					<form:label path="titulo">
+						<spring:message text="Título: " />
+					</form:label>
+					<form:input path="titulo" cssClass="" cssErrorClass="" />
+					<form:errors cssClass="" path="titulo" />
+				</div>
+				<div class="form-group col-md-8 column ui-sortable">
+					<form:label path="${usuario.nombre}">
+						<spring:message text="Usuario: " />
+					</form:label>
+					<form:input path="${usuario.nombre}" cssClass="" cssErrorClass="" />
+					<form:errors cssClass="" path="${usuario.nombre}" />
+				</div>
 			<div>
 				<div class="form-group col-md-8 column ui-sortable">
 					<form:label path="editorial">

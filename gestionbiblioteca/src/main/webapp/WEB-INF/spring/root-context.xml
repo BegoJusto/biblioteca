@@ -39,13 +39,5 @@
 	<bean id = "libroServiceImp" class="com.ipartek.formacion.services.LibroServiceImp">
 		<property name="libroDAO" ref="libroDAOImp"/>
 	</bean>
-	
-	<bean id = "prestamoDAOImp" class="com.ipartek.formacion.dao.PrestamoDAOImp">
-		<property name="dataSource" ref="mysqlDataSource"/>
-	</bean>
-	
-	<bean id = "PrestamoServiceImp" class="com.ipartek.formacion.services.PrestamoServiceImp">
-		<property name="prestamoDAO" ref="prestamoDAOImp"/>
-	</bean>
-	
+
 </beans>

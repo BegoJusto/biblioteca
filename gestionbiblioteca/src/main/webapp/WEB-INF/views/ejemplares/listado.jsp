@@ -17,7 +17,7 @@
 					<thead>
 						<tr>
 							<th>Editorial</th>
-							<th>N�mero de P�ginas</th>
+							<th>Número de páginas</th>
 						</tr>
 					</thead>
 					<tbody>

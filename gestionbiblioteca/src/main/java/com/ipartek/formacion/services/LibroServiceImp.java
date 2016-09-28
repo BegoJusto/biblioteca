@@ -14,35 +14,35 @@ public class LibroServiceImp implements LibroService {
 	@Autowired
 	private LibroDAOImp libroDAO;
 	
-	@Override
-	public Libro create(Libro libro) {
-		
-		return libroDAO.create(libro);
-	}
+//	@Override
+//	public Libro create(Libro libro) {
+//		
+//		return libroDAO.create(libro);
+//	}
 
 	@Override
 	public List<Libro> getAll() {
 		
 		return libroDAO.getAll();
 	}
-
-	@Override
-	public Libro getById(int id) {
-		
-		return libroDAO.getById(id);
-	}
-
-	@Override
-	public Libro update(Libro libro) {
-		
-		return libroDAO.update(libro);
-	}
-
-	@Override
-	public void delete(int id) {
-		
-		libroDAO.delete(id);
-	}
+//
+//	@Override
+//	public Libro getById(int id) {
+//		
+//		return libroDAO.getById(id);
+//	}
+////
+//	@Override
+//	public Libro update(Libro libro) {
+//		
+//		return libroDAO.update(libro);
+//	}
+//
+//	@Override
+//	public void delete(int id) {
+//		
+//		libroDAO.delete(id);
+//	}
 
 	@Override
 	public void setLibroDAO(LibroDAOImp libroDAO) {

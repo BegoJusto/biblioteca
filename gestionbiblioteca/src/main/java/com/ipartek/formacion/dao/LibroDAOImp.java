@@ -14,9 +14,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.dao.interfaces.LibroDAO;
-import com.ipartek.formacion.dao.mapper.LibroMapper;
 import com.ipartek.formacion.dao.mapper.LibrosExtractor;
-import com.ipartek.formacion.dao.persistencia.Libro;
 import com.ipartek.formacion.dao.persistencia.Libro;
 
 @Repository("libroDAOImp")
@@ -35,7 +33,7 @@ public class LibroDAOImp implements LibroDAO {
 
 		try {
 			
-			libros = jdbcTemplate.query(SQL, new Libro());
+			libros = jdbcTemplate.query(SQL, new LibrosExtractor());
 		} catch (EmptyResultDataAccessException e) {
 			logger.error(e.getMessage());
 			libros = new ArrayList<Libro>();
@@ -47,8 +45,11 @@ public class LibroDAOImp implements LibroDAO {
 	
 	@Override
 	public List<Libro> find(Libro libro) {
-		// TODO Auto-generated method stub
-		return null;
+				List<Libro> libros = new ArrayList<Libro>();
+		if(this.getAll().equals(libro)){			
+			libros.add(libro);
+		}
+		return libros;
 	}
 	
 	@Autowired
@@ -63,7 +64,7 @@ public class LibroDAOImp implements LibroDAO {
 
 	
 
-//
+
 //	@Override
 //	public Libro create(Libro libro) {
 //		final String SQL = "INSERT INTO libro (titulo, autor, isbn, numEjemplares) VALUES (?,?,?,?);";
@@ -72,7 +73,7 @@ public class LibroDAOImp implements LibroDAO {
 //
 //		return libro;
 //	}
-//
+
 //	@Override
 //	public void delete(int id) {
 //		final String SQL = "DELETE FROM libro WHERE codLibro = ?;";

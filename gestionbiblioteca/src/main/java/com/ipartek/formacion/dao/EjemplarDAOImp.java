@@ -1,48 +1,102 @@
 package com.ipartek.formacion.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
 import com.ipartek.formacion.dao.interfaces.EjemplarDAO;
 import com.ipartek.formacion.dao.mapper.EjemplarMapper;
+import com.ipartek.formacion.dao.mapper.LibrosExtractor;
 import com.ipartek.formacion.dao.persistencia.Ejemplar;
 import com.ipartek.formacion.dao.persistencia.Libro;
 
+
+
 @Repository("ejemplarDAOImp")
 public class EjemplarDAOImp implements EjemplarDAO {
-	private static final Logger logger = LoggerFactory.getLogger(EjemplarDAOImp.class);
+
+	@SuppressWarnings("unused")
 	@Autowired
 	private DataSource dataSource;
-	private JdbcTemplate jdbcTemplate;
 	private SimpleJdbcCall jdbcCall;
+	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	@Override
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbcCall = new SimpleJdbcCall(dataSource);
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
-	public List<Ejemplar> getAll(Libro libro) {
+	public List<Libro> getAll() {
+		List<Libro> libros = null;
+		final String SQL = "call OBTENER_CATOLOGO()";
 
-		List<Ejemplar> ejemplares = new ArrayList<Ejemplar>();
-		final String SQL = "SELECT codEjemplar, editorial, numPaginas, libro.titulo, libro.autor, libro.isbn, usuario.nombre, usuario.apellidos FROM ejemplar INNER JOIN Libro on Ejemplar.codLibro = Libro.codLibro INNER JOIN Usuario on Ejemplar.codUsuario = Usuario.codUsuario;";
-//String sql = "{call getAlumnoById(?)}";
-		try {
-			
-			ejemplares = jdbcTemplate.query(SQL, new EjemplarMapper());
-		} catch (EmptyResultDataAccessException e) {
-			ejemplares = new ArrayList<Ejemplar>();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		libros = jdbcTemplate.query(SQL, new LibrosExtractor());
+
+		return libros;
+	}
+
+	@Override
+	public List<Libro> find(Libro libro) {
+		List<Libro> libros = null;
+		final String SQL = "call CONSULTAR_CATOLOGO(?,?)";
+		libros = jdbcTemplate.query(SQL, new Object[] { libro.getIsbn(), libro.getTitulo() }, new LibrosExtractor());
+
+		return libros;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Ejemplar> getEjemplares(Libro libro) {
+		List<Ejemplar> ejemplares = null;
+		final String SQL = "OBTENER_EJEMPLARES";
+		jdbcCall.withProcedureName(SQL).returningResultSet("listado", new EjemplarMapper());
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigoLibro", libro.getCodigo());
+		ejemplares = (List<Ejemplar>) jdbcCall.execute(in).get("listado");
+
 		return ejemplares;
 	}
 
+	@Override
+	public Ejemplar getEjemplar(int codEjemplar) {
+		final String SQL = "OBTENER_EJEMPLAR";
+		Ejemplar ejemplar = null;
+		jdbcCall.withProcedureName(SQL).returningResultSet("ejemplar", new EjemplarMapper());
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigoEjemplar", codEjemplar);
+		ejemplar = (Ejemplar) jdbcCall.execute(in).get("ejemplar");
+		return ejemplar;
+	}
+
+	@Override
+	public void delete(int codLibro) {
+		final String SQL = "BORRAR_EJEMPLAR";
+		jdbcCall.withProcedureName(SQL);
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigoLibro", codLibro);
+		jdbcCall.execute(in);
+	}
+
+	@Override
+	public Ejemplar update(Ejemplar ejemplar) {
+		final String SQL = "ACTUALIZAR_EJEMPLAR";
+		jdbcCall.withProcedureName(SQL);
+		SqlParameterSource in = new MapSqlParameterSource().addValue("codigoEjemplar", ejemplar.getCodigo())
+				.addValue("pIsbn", ejemplar.getIsbn()).addValue("pNpaginas", ejemplar.getCodigo())
+				.addValue("pTitulo", ejemplar.getTitulo()).addValue("pCodigoLibro", ejemplar.getCodigo());
+		jdbcCall.execute(in);
+
+		return ejemplar;
+	}
+	
 	@Override
 	public Ejemplar create(Ejemplar ejemplar) {
 		final String SQL = "INSERT INTO ejemplar (editorial, numPaginas) VALUES (?,?);";
@@ -51,63 +105,5 @@ public class EjemplarDAOImp implements EjemplarDAO {
 
 		return ejemplar;
 	}
-
-	@Override
-	public void delete(int id) {
-		final String SQL = "DELETE FROM ejemplar WHERE codEjemplar = ?;";
-		jdbcTemplate.update(SQL, new Object[] { id });
-
-	}
-
-	@Override
-	public Ejemplar update(Ejemplar ejemplar) {
-
-		final String SQL = "UPDATE ejemplar SET editorial = ?, numPaginas = ? WHERE codEjemplar = ?";
-		this.jdbcTemplate.update(SQL, ejemplar.getEditorial(), ejemplar.getNumPaginas(), ejemplar.getCodigo());
-		return ejemplar;
-	}
-
-
-
-	@Override
-	public Ejemplar getById(int id) {
-		Ejemplar ejemplar = null;
-		final String SQL = "SELECT codEjemplar, editorial, numPaginas, codUsuario FROM ejemplar WHERE codEjemplar = ?;";
-		try {
-			ejemplar = jdbcTemplate.queryForObject(SQL, new Object[] { id },
-					new EjemplarMapper());
-		} catch (EmptyResultDataAccessException e) {
-			ejemplar = new Ejemplar(usuario);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-		}
-		return ejemplar;
-	}
-
-	
-	@Autowired
-	@Override
-	public List<Libro> getAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Libro> find(Libro libro) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Autowired
-	@Override
-	public void setDataSource(DataSource dataSource) {
-
-		this.dataSource = dataSource;
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		this.jdbcCall = new SimpleJdbcCall(dataSource);
-
-	}
-
-	
 
 }

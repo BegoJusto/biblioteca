@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ipartek.formacion.dao.EjemplarDAOImp;
 import com.ipartek.formacion.dao.persistencia.Ejemplar;
+import com.ipartek.formacion.dao.persistencia.Libro;
 import com.ipartek.formacion.services.interfaces.EjemplarService;
 
 public class EjemplarServiceImp implements EjemplarService {
@@ -20,15 +21,15 @@ public class EjemplarServiceImp implements EjemplarService {
 	}
 
 	@Override
-	public List<Ejemplar> getAll() {
+	public List<Libro> getAll() {
 		
 		return ejemplarDAO.getAll();
 	}
 
 	@Override
-	public Ejemplar getById(int id) {
+	public Ejemplar getEjemplar(int codEjemplar) {
 		
-		return ejemplarDAO.getById(id);
+		return ejemplarDAO.getEjemplar(codEjemplar);
 	}
 
 	@Override

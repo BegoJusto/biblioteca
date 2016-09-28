@@ -58,17 +58,17 @@
 								RestClient</a></li>
 					</ul></li>
 			</ul>
-			<ul class="nav navbar-nav">
-				<li class="dropdown"><a class="dropdrown-toggle"
-					data-toggle="dropdown" href='<c:url value = "/libros/"/>'>Libros</a>
-					<ul class="dropdown-menu">
-						<li><a href='<c:url value = "/libros"/>'>Libros</a></li>
-						<li><a href='<c:url value="/libros/addLibro"/>'>Crear
-								Libro</a></li>
-						<li><a href='<c:url value="/libros/restclients"/>'>
-								RestClient</a></li>
-					</ul></li>
-			</ul>
+<!-- 			<ul class="nav navbar-nav"> -->
+<!-- 				<li class="dropdown"><a class="dropdrown-toggle" -->
+<%-- 					data-toggle="dropdown" href='<c:url value = "/libros/"/>'>Libros</a> --%>
+<!-- 					<ul class="dropdown-menu"> -->
+<%-- 						<li><a href='<c:url value = "/libros"/>'>Libros</a></li> --%>
+<%-- 						<li><a href='<c:url value="/libros/addLibro"/>'>Crear --%>
+<!-- 								Libro</a></li> -->
+<%-- 						<li><a href='<c:url value="/libros/restclients"/>'> --%>
+<!-- 								RestClient</a></li> -->
+<!-- 					</ul></li> -->
+<!-- 			</ul> -->
 			<ul class="nav navbar-nav">
 				<li class="dropdown"><a class="dropdrown-toggle"
 					data-toggle="dropdown" href='<c:url value = "/ejemplares/"/>'>Ejemplares</a>
@@ -80,17 +80,7 @@
 								RestClient</a></li>
 					</ul></li>
 			</ul>
-			<ul class="nav navbar-nav">
-				<li class="dropdown"><a class="dropdrown-toggle"
-					data-toggle="dropdown" href='<c:url value = "/prestamos/"/>'>Prestamos</a>
-					<ul class="dropdown-menu">
-						<li><a href='<c:url value="/prestamos" />'>Prestamos</a></li>
-						<li><a href='<c:url value="/prestamos/reservarPrestamo"/>'>Crear
-								Prestamo</a></li>
-						<li><a href='<c:url value="/prestamos/restclients"/>'>
-								RestClient</a></li>
-					</ul></li>
-			</ul>
+		
 		</div>
 	</nav>
 	<!-- Hasta aquí todo el encabezado -->

@@ -39,7 +39,9 @@ public class Libro implements Serializable {
 		setEjemplares(new ArrayList<Ejemplar>());
 		
 	}
-	
+	public void addEjemplar(Ejemplar ejemplar) {
+		this.ejemplares.add(ejemplar);
+	}
 
 	public List<Ejemplar> getEjemplares() {
 		return ejemplares;
